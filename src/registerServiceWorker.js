@@ -43,6 +43,32 @@ export default function register() {
   }
 }
 
+function showNotification () {
+  if ('Notification' in window) {
+    console.log('All Right! Notification on window!')
+
+    if (Notification.permission === 'granted') {
+      navigator.serviceWorker.getRegistration().then(function(reg) {
+        var options = {
+          body: 'Aeeeeeeeee krai!!',
+          icon: '/logo.svg',
+          vibrate: [100, 50, 100],
+          data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+          }
+        }
+
+        reg.showNotification('\\o/', options)
+        options.body = "#partiu Argentina!"
+        setTimeout(() => {
+          reg.showNotification('=)', options)
+        }, 1000)
+      })
+    }
+  }
+}
+
 function registerValidSW(swUrl) {
   navigator.serviceWorker
     .register(swUrl)
@@ -67,29 +93,12 @@ function registerValidSW(swUrl) {
         };
       };
 
-      if ('Notification' in window) {
-        console.log('All Right! Notification on window!')
+      Notification.requestPermission(function(status) {
+        console.log('Notification permission status:', status)
+        showNotification()
+      })
 
-        if (Notification.permission === 'granted') {
-          navigator.serviceWorker.getRegistration().then(function(reg) {
-            var options = {
-              body: 'Aeeeeeeeee krai!!',
-              icon: '/logo.svg',
-              vibrate: [100, 50, 100],
-              data: {
-                dateOfArrival: Date.now(),
-                primaryKey: 1
-              }
-            }
-
-            reg.showNotification('\\o/', options)
-            options.body = "#partiu Argentina!"
-            setTimeout(() => {
-              reg.showNotification('=)', options)
-            }, 1000)
-          })
-        }
-      }
+      
     })
     .catch(error => {
       console.error('Error during service worker registration:', error);
