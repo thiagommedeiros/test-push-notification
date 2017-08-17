@@ -51,7 +51,7 @@ function showNotification () {
       navigator.serviceWorker.getRegistration().then(function(reg) {
         var options = {
           body: 'Aeeeeeeeee krai!!',
-          icon: '/logo.svg',
+          icon: 'logo.svg',
           vibrate: [100, 50, 100],
           data: {
             dateOfArrival: Date.now(),
@@ -98,7 +98,7 @@ function registerValidSW(swUrl) {
         showNotification()
       })
 
-      
+
     })
     .catch(error => {
       console.error('Error during service worker registration:', error);
